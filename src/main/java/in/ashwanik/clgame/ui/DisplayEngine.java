@@ -3,7 +3,7 @@ package in.ashwanik.clgame.ui;
 import in.ashwanik.clgame.ui.screens.GameDisplay;
 
 /**
- * Created by jh80 on 13/04/18.
+ * Created by Ashwani Kumar on 13/04/18.
  */
 public class DisplayEngine {
     private static DisplayEngine INSTANCE;

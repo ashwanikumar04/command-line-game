@@ -9,17 +9,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import static org.assertj.core.api.Java6Assertions.assertThat;
+
 /**
- * Created by jh80 on 12/04/18.
+ * Created by Ashwani Kumar on 12/04/18.
  */
 @Category(UnitTest.class)
 public class EventBusTest {
 
-    Subscriber testSubscriber = new Subscriber() {
-        @Override
-        public void receive(Message message) {
-
-        }
+    Subscriber testSubscriber = message -> {
+        assertThat(message).isNotNull();
     };
 
     @Before
