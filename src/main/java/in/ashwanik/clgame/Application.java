@@ -2,14 +2,10 @@ package in.ashwanik.clgame;
 
 
 import in.ashwanik.clgame.messaging.Broker;
-import in.ashwanik.clgame.messaging.Messenger;
-import in.ashwanik.clgame.ui.screens.ConsoleDisplay;
+import in.ashwanik.clgame.messaging.EventBus;
 import in.ashwanik.clgame.ui.screens.GameArena;
+import in.ashwanik.clgame.utils.SerializationUtil;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 
 @Slf4j
 public class Application {
@@ -19,19 +15,7 @@ public class Application {
     private static GameArena getGameArena(boolean load) {
         GameArena gameArena = null;
         if (load) {
-            try {
-                FileInputStream fi = new FileInputStream(filePath);
-                ObjectInputStream is = new ObjectInputStream(fi);
-                gameArena = (GameArena) is.readObject();
-                is.close();
-                fi.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                return null;
-            } catch (ClassNotFoundException c) {
-                c.printStackTrace();
-                return null;
-            }
+            gameArena = (GameArena) SerializationUtil.deserialize(filePath);
             return gameArena;
         } else {
             gameArena = new GameArena();
@@ -41,8 +25,8 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        Messenger.init(new Broker());
-        Game game = new Game(new ConsoleDisplay(), getGameArena(true));
+        EventBus.init(new Broker());
+        Game game = new Game(getGameArena(true));
         game.start();
     }
 }

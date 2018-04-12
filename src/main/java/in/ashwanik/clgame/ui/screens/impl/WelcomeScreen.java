@@ -1,6 +1,6 @@
 package in.ashwanik.clgame.ui.screens.impl;
 
-import in.ashwanik.clgame.ui.screens.GameDisplay;
+import in.ashwanik.clgame.ui.DisplayEngine;
 import in.ashwanik.clgame.ui.screens.Renderer;
 import lombok.AllArgsConstructor;
 
@@ -10,14 +10,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class WelcomeScreen implements Renderer {
 
-    private GameDisplay gameDisplay;
-
     @Override
     public void render() {
-        gameDisplay.displayInGreen("------------------------------------------------");
-        gameDisplay.displayInGreen("\t----------------------------------\t");
-        gameDisplay.displayInGreen("\t--------Welcome to Game-----------\t");
-        gameDisplay.displayInGreen("\t----------------------------------\t");
-        gameDisplay.displayInGreen("------------------------------------------------");
+        DisplayEngine.getDisplay().displayInGreen("------------------------------------------------");
+        DisplayEngine.getDisplay().displayInGreen("\t----------------------------------\t");
+        DisplayEngine.getDisplay().displayInGreen("\t--------Welcome to Game-----------\t");
+        DisplayEngine.getDisplay().displayInGreen("\t----------------------------------\t");
+        DisplayEngine.getDisplay().displayInGreen("------------------------------------------------");
     }
 }

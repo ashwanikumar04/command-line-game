@@ -1,6 +1,7 @@
-package in.ashwanik.clgame.ui.screens;
+package in.ashwanik.clgame.ui.screens.impl;
 
 import in.ashwanik.clgame.common.Color;
+import in.ashwanik.clgame.ui.screens.GameDisplay;
 
 import java.io.Serializable;
 

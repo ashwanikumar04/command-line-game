@@ -2,7 +2,7 @@ group 'in.ashwanik'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-
+apply plugin: 'jacoco'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -15,6 +15,8 @@ buildscript {
         assertjVersion = '3.6.1'
         mockitVersion = '2.3.11'
         mockitInlineVersion = '2.10.0'
+        jacocoToolVersion = '0.7.5.201505241946'
+
     }
     repositories {
         mavenCentral()
@@ -67,3 +69,18 @@ jar {
 }
 
 build.dependsOn copyToLib
+
+jacoco {
+    toolVersion = jacocoToolVersion
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled = true
+        xml.enabled = false
+        csv.enabled = false
+        html.destination "${project.projectDir}/reports/jacoco"
+    }
+}
+
+test.finalizedBy jacocoTestReport
