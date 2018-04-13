@@ -7,6 +7,8 @@ import java.io.*;
  */
 public class SerializationUtil {
 
+   
+
     public static boolean serialize(String fileName, Object data) {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
             outputStream.writeObject(data);

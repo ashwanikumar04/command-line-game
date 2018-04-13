@@ -10,12 +10,10 @@ import in.ashwanik.clgame.messaging.messages.Message;
 import in.ashwanik.clgame.ui.screens.GameArena;
 import in.ashwanik.clgame.ui.screens.Renderer;
 import in.ashwanik.clgame.ui.screens.impl.WelcomeScreen;
-import lombok.Getter;
 
 /**
  * Created by Ashwani Kumar on 11/04/18.
  */
-@Getter
 public class Game implements Subscriber {
     private static GameArena gameArena;
     private CommandParser commandParser;
@@ -24,6 +22,14 @@ public class Game implements Subscriber {
     public Game() {
         EventBus.getInstance().subscribe(this, Topics.GAME_STATE);
         commandParser = new CommandParser();
+    }
+
+    public static GameArena getGameArena() {
+        return gameArena;
+    }
+
+    public static void setGameArena(GameArena ga) {
+        gameArena = ga;
     }
 
     public void start() {
