@@ -10,6 +10,7 @@ import in.ashwanik.clgame.messaging.messages.Message;
 import in.ashwanik.clgame.ui.screens.GameArena;
 import in.ashwanik.clgame.ui.screens.Renderer;
 import in.ashwanik.clgame.ui.screens.impl.WelcomeScreen;
+import lombok.Getter;
 
 import java.io.InputStream;
 
@@ -20,6 +21,8 @@ public class Game implements Subscriber {
     private static GameArena gameArena;
     private CommandParser commandParser;
     private boolean finished;
+    @Getter
+    private static boolean started;
 
     public Game(InputStream inputStream) {
         EventBus.getInstance().subscribe(this, Topics.GAME_STATE);
@@ -31,6 +34,7 @@ public class Game implements Subscriber {
     }
 
     public static void setGameArena(GameArena ga) {
+        EventBus.getInstance().subscribe(ga, Topics.GAME_STATE);
         gameArena = ga;
     }
 
@@ -49,6 +53,9 @@ public class Game implements Subscriber {
         switch (message.getMessageType()) {
             case QUIT:
                 finished = true;
+                break;
+            case GAME_STARTED:
+                started = true;
                 break;
             default:
                 break;

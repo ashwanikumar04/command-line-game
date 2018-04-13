@@ -19,17 +19,17 @@ public class ConsoleDisplay implements GameDisplay, Serializable {
 
     @Override
     public void displayInWhite(String text) {
-        System.out.println(ANSI_WHITE + text);
+        System.out.print(ANSI_WHITE + text);
     }
 
     @Override
     public void displayInRed(String text) {
-        System.out.println(ANSI_RED + text);
+        System.out.print(ANSI_RED + text);
     }
 
     @Override
     public void displayInGreen(String text) {
-        System.out.println(ANSI_GREEN + text);
+        System.out.print(ANSI_GREEN + text);
     }
 
     @Override
@@ -55,6 +55,6 @@ public class ConsoleDisplay implements GameDisplay, Serializable {
             default:
                 colorCode = ANSI_RESET;
         }
-        System.out.println(colorCode + text);
+        System.out.print(colorCode + text);
     }
 }

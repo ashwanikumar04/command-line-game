@@ -30,3 +30,4 @@ nbdist/
 logs/app.log
 logs/
 bin
+data

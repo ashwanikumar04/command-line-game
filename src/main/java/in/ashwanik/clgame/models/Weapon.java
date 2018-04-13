@@ -29,6 +29,6 @@ public class Weapon extends CollectibleItem implements Serializable {
                 + ", description: " + getDescription()
                 + ", minimumDamage: " + this.getMinimumDamage()
                 + ", maximumDamage:" + this.getMaximumDamage()
-                + ", weight: " + this.getWeight();
+                + ", weight: " + this.getWeight() + " g";
     }
 }

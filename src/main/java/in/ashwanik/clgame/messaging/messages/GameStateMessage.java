@@ -7,11 +7,11 @@ import lombok.Getter;
  * Created by Ashwani Kumar on 13/04/18.
  */
 @Getter
-public class DisplayMessage extends Message {
+public class GameStateMessage extends Message {
     private Object payload;
 
     @Builder
-    private DisplayMessage(String topic, String sender, String receiver, MessageType messageType, Object payload) {
+    private GameStateMessage(String topic, String sender, String receiver, MessageType messageType, Object payload) {
         super(topic, sender, receiver, messageType);
         this.payload = payload;
     }

@@ -11,10 +11,10 @@ public class WelcomeScreen implements Renderer {
     @Override
     public void render() {
         DisplayEngine.getDisplay().displayInGreen("------------------------------------------------");
-        DisplayEngine.getDisplay().displayInGreen("\t----------------------------------\t");
-        DisplayEngine.getDisplay().displayInGreen("\t--------Welcome to Game-----------\t");
-        DisplayEngine.getDisplay().displayInGreen("\t----------------------------------\t");
-        DisplayEngine.getDisplay().displayInGreen("------------------------------------------------");
-        DisplayEngine.getDisplay().displayInGreen("\t\tRun help command to get started\t\t");
+        DisplayEngine.getDisplay().displayInGreen("\n\t----------------------------------\t");
+        DisplayEngine.getDisplay().displayInGreen("\n\t--------Welcome to Game-----------\t");
+        DisplayEngine.getDisplay().displayInGreen("\n\t----------------------------------\t");
+        DisplayEngine.getDisplay().displayInGreen("\n------------------------------------------------");
+        DisplayEngine.getDisplay().displayInGreen("\n\t\tRun help command to get started\t\t\n");
     }
 }

@@ -20,7 +20,8 @@ public class Help extends Command {
     public void execute(String[] arguments) {
         List<CommandDetail> commandDetails = CommandList.get().getCommands();
         for (CommandDetail commandDetail : commandDetails) {
-            DisplayEngine.getDisplay().displayInWhite(commandDetail.toString());
+            DisplayEngine.getDisplay().displayInWhite("\n" + commandDetail.toString());
         }
+        DisplayEngine.getDisplay().displayInWhite("\n");
     }
 }

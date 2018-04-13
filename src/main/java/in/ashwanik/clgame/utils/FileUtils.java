@@ -1,7 +1,5 @@
 package in.ashwanik.clgame.utils;
 
-import in.ashwanik.clgame.messaging.EventBus;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.Objects;
@@ -11,7 +9,7 @@ import java.util.Objects;
  */
 public class FileUtils {
     public static String getBasePath() {
-        return EventBus.getInstance().getClass().getProtectionDomain().getCodeSource().getLocation().toString() + File.pathSeparator + "data";
+        return System.getProperty("user.dir") + File.separator + "data";
     }
 
     public static void createBasePath() {

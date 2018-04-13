@@ -15,7 +15,7 @@ public class CommandParser {
     }
 
     public IssuedCommand getIssuedCommand() {
-        DisplayEngine.getDisplay().displayInGreen(":$: ");
+        DisplayEngine.getDisplay().displayInGreen("\n:$ ");
         String inputLine;
         inputLine = reader.nextLine();
         if (StringUtils.isBlank(inputLine)) {

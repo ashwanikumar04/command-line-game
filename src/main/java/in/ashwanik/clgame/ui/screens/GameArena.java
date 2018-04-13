@@ -1,9 +1,8 @@
 package in.ashwanik.clgame.ui.screens;
 
-import in.ashwanik.clgame.models.Player;
 import in.ashwanik.clgame.messaging.Subscriber;
-import in.ashwanik.clgame.messaging.messages.DisplayMessage;
 import in.ashwanik.clgame.messaging.messages.Message;
+import in.ashwanik.clgame.models.Player;
 import in.ashwanik.clgame.ui.DisplayEngine;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,12 +24,18 @@ public class GameArena implements Serializable, Subscriber {
 
     private void displayPlayerHud() {
         if (player != null) {
-            DisplayEngine.getDisplay().displayInGreen("Hud: " + player.getHealth());
+            DisplayEngine.getDisplay().displayInGreen("\n\tPlayer health: " + player.getHealth());
         }
     }
 
     @Override
     public void receive(Message message) {
-        DisplayEngine.getDisplay().displayInGreen(((DisplayMessage) message).getPayload().toString());
+        switch (message.getMessageType()) {
+            case GAME_STARTED:
+                updateDisplay();
+                break;
+            default:
+                break;
+        }
     }
 }
