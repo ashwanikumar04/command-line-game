@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>GameArena.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">clgame</a> &gt; <a href="index.source.html" class="el_package">in.ashwanik.clgame.ui.screens</a> &gt; <span class="el_source">GameArena.java</span></div><h1>GameArena.java</h1><pre class="source lang-java linenums">package in.ashwanik.clgame.ui.screens;
 
 import in.ashwanik.clgame.Player;
-import in.ashwanik.clgame.messaging.Message;
 import in.ashwanik.clgame.messaging.Subscriber;
+import in.ashwanik.clgame.messaging.messages.DisplayMessage;
+import in.ashwanik.clgame.messaging.messages.Message;
 import in.ashwanik.clgame.ui.DisplayEngine;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,28 +14,24 @@ import java.io.Serializable;
  * Created by Ashwani Kumar on 12/04/18.
  */
 @Getter
-<span class="nc" id="L16">@Setter</span>
-public class GameArena implements Serializable, Subscriber {
+<span class="nc" id="L17">@Setter</span>
+<span class="nc" id="L18">public class GameArena implements Serializable, Subscriber {</span>
     private static final long serialVersionUID = -6158956787090431591L;
-<span class="nc" id="L19">    private Player player;</span>
-
-<span class="nc" id="L21">    public GameArena() {</span>
-
-<span class="nc" id="L23">    }</span>
+<span class="nc" id="L20">    private Player player;</span>
 
     public void updateDisplay() {
-<span class="nc" id="L26">        displayPlayerHud();</span>
-<span class="nc" id="L27">    }</span>
+<span class="nc" id="L23">        displayPlayerHud();</span>
+<span class="nc" id="L24">    }</span>
 
     private void displayPlayerHud() {
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (player != null) {</span>
-<span class="nc" id="L31">            DisplayEngine.getDisplay().displayInGreen(&quot;Hud: &quot; + player.getHealth());</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (player != null) {</span>
+<span class="nc" id="L28">            DisplayEngine.getDisplay().displayInGreen(&quot;Hud: &quot; + player.getHealth());</span>
         }
-<span class="nc" id="L33">    }</span>
+<span class="nc" id="L30">    }</span>
 
     @Override
     public void receive(Message message) {
-<span class="nc" id="L37">        DisplayEngine.getDisplay().displayInGreen(message.getPayload().toString());</span>
-<span class="nc" id="L38">    }</span>
+<span class="nc" id="L34">        DisplayEngine.getDisplay().displayInGreen(((DisplayMessage) message).getPayload().toString());</span>
+<span class="nc" id="L35">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

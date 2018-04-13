@@ -3,8 +3,10 @@ package in.ashwanik.clgame.message;
 import in.ashwanik.clgame.UnitTest;
 import in.ashwanik.clgame.messaging.Broker;
 import in.ashwanik.clgame.messaging.EventBus;
-import in.ashwanik.clgame.messaging.Message;
 import in.ashwanik.clgame.messaging.Subscriber;
+import in.ashwanik.clgame.messaging.Topics;
+import in.ashwanik.clgame.messaging.messages.MessageType;
+import in.ashwanik.clgame.messaging.messages.QuitMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -17,7 +19,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @Category(UnitTest.class)
 public class EventBusTest {
 
-    Subscriber testSubscriber = message -> {
+    private Subscriber testSubscriber = message -> {
         assertThat(message).isNotNull();
     };
 
@@ -39,7 +41,7 @@ public class EventBusTest {
     @Test
     public void Should_Publish_On_Topic() {
         EventBus.getInstance().subscribe(testSubscriber, "test");
-        EventBus.getInstance().publish(Message.builder().payload("test").topic("test").build());
+        EventBus.getInstance().publish(QuitMessage.builder().payload("").topic(Topics.GAME_STATE).messageType(MessageType.GAME_STATE).build());
     }
 }
 

@@ -1,59 +1,47 @@
 package in.ashwanik.clgame;
 
+import in.ashwanik.clgame.commands.CommandExecutor;
+import in.ashwanik.clgame.commands.CommandParser;
+import in.ashwanik.clgame.commands.IssuedCommand;
+import in.ashwanik.clgame.common.Color;
 import in.ashwanik.clgame.messaging.EventBus;
-import in.ashwanik.clgame.messaging.Message;
+import in.ashwanik.clgame.messaging.Subscriber;
+import in.ashwanik.clgame.messaging.Topics;
+import in.ashwanik.clgame.messaging.messages.Message;
 import in.ashwanik.clgame.ui.DisplayEngine;
 import in.ashwanik.clgame.ui.screens.GameArena;
 import in.ashwanik.clgame.ui.screens.Renderer;
 import in.ashwanik.clgame.ui.screens.impl.WelcomeScreen;
-import in.ashwanik.clgame.utils.SerializationUtil;
 import lombok.Getter;
-
-import java.util.Scanner;
 
 /**
  * Created by Ashwani Kumar on 11/04/18.
  */
 @Getter
-public class Game {
-    private static final long serialVersionUID = -3944652744199321295L;
-    private Scanner reader;
+public class Game implements Subscriber {
     private static GameArena gameArena;
+    private CommandParser commandParser;
+    private boolean finished;
 
-    public Game(GameArena gameArena) {
-        EventBus.getInstance().subscribe(gameArena, "topic");
-        reader = new Scanner(System.in);
+    public Game(GameArena ga) {
+        gameArena = ga;
+        EventBus.getInstance().subscribe(this, Topics.GAME_STATE);
+        commandParser = new CommandParser();
     }
 
     public void start() {
         Renderer welcomeRenderer = new WelcomeScreen();
         welcomeRenderer.render();
-        boolean finished = false;
-        gameArena.updateDisplay();
+        finished = false;
         while (!finished) {
-            String inputLine;   // will hold the full input line
-            String word1 = null;
-            String word2 = null;
-
-            DisplayEngine.getDisplay().displayInGreen("> ");     // print prompt
-            inputLine = reader.nextLine();
-            Scanner tokenizer = new Scanner(inputLine);
-            if (tokenizer.hasNext()) {
-                word1 = tokenizer.next();      // get first word
-                if (tokenizer.hasNext()) {
-                    word2 = tokenizer.next();      // get second word
-                    // note: we just ignore the rest of the input line.
-                }
-            }
-            if (word1.equals("save")) {
-                SerializationUtil.serialize(Application.filePath, gameArena);
-                finished = true;
-            } else if (word1.equals("publish")) {
-                EventBus.getInstance().publish(Message.builder().payload("test").topic("topic").build());
-            }
+            IssuedCommand issuedCommand = commandParser.getIssuedCommand();
+            CommandExecutor.execute(issuedCommand);
         }
-
     }
 
-
+    @Override
+    public void receive(Message message) {
+        DisplayEngine.getDisplay().display(Color.YELLOW, "Good bye, see you soon!!!");
+        finished = true;
+    }
 }

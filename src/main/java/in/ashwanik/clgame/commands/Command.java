@@ -6,13 +6,13 @@ package in.ashwanik.clgame.commands;
 
 public abstract class Command {
 
-    private final CommandDescription description;
+    private final CommandDetail description;
 
-    Command(String name, String info) {
-        description = new CommandDescription(name, info);
+    public Command(String name, String info) {
+        description = new CommandDetail(name, info);
     }
 
-    public CommandDescription getDescription() {
+    public CommandDetail getDescription() {
         return description;
     }
 

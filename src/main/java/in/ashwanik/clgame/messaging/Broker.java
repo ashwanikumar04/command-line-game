@@ -1,5 +1,7 @@
 package in.ashwanik.clgame.messaging;
 
+import in.ashwanik.clgame.utils.StringUtils;
+
 import java.util.*;
 
 public class Broker {
@@ -9,9 +11,9 @@ public class Broker {
         subscribers = new HashMap<>();
     }
 
-    public List<Subscriber> getSubscribersForTopic(String topic) {
+    List<Subscriber> getSubscribersForTopic(String topic) {
         synchronized (subscribers) {
-            if ((topic != null && (topic.length() > 0))
+            if (!StringUtils.isBlank(topic)
                     && subscribers.containsKey(topic)) {
                 return subscribers.get(topic);
             } else {
@@ -20,9 +22,9 @@ public class Broker {
         }
     }
 
-    public void addSubscriber(String topic, Subscriber subscriber) {
+    void addSubscriber(String topic, Subscriber subscriber) {
         synchronized (subscribers) {
-            if (topic != null && (topic.length() > 0)) {
+            if (!StringUtils.isBlank(topic)) {
                 if (subscribers.containsKey(topic)) {
                     subscribers.get(topic).add(subscriber);
                 } else {
@@ -34,9 +36,9 @@ public class Broker {
         }
     }
 
-    public void removeSubscriber(String topic, Subscriber subscriber) {
+    void removeSubscriber(String topic, Subscriber subscriber) {
         synchronized (subscribers) {
-            if (topic != null && (topic.length() > 0)) {
+            if (!StringUtils.isBlank(topic)) {
                 List<Subscriber> subscribersList = getSubscribersForTopic(topic);
                 for (int index = 0; index < subscribersList.size(); index++) {
                     if (subscriber.getClass().equals(subscribersList.get(index).getClass())) {

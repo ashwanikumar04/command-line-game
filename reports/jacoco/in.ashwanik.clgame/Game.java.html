@@ -1,60 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Game.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">clgame</a> &gt; <a href="index.source.html" class="el_package">in.ashwanik.clgame</a> &gt; <span class="el_source">Game.java</span></div><h1>Game.java</h1><pre class="source lang-java linenums">package in.ashwanik.clgame;
 
+import in.ashwanik.clgame.commands.CommandExecutor;
+import in.ashwanik.clgame.commands.CommandParser;
+import in.ashwanik.clgame.commands.IssuedCommand;
+import in.ashwanik.clgame.common.Color;
 import in.ashwanik.clgame.messaging.EventBus;
-import in.ashwanik.clgame.messaging.Message;
+import in.ashwanik.clgame.messaging.Subscriber;
+import in.ashwanik.clgame.messaging.Topics;
+import in.ashwanik.clgame.messaging.messages.Message;
 import in.ashwanik.clgame.ui.DisplayEngine;
 import in.ashwanik.clgame.ui.screens.GameArena;
 import in.ashwanik.clgame.ui.screens.Renderer;
 import in.ashwanik.clgame.ui.screens.impl.WelcomeScreen;
-import in.ashwanik.clgame.utils.SerializationUtil;
 import lombok.Getter;
-
-import java.util.Scanner;
 
 /**
  * Created by Ashwani Kumar on 11/04/18.
  */
 @Getter
-public class Game {
-    private static final long serialVersionUID = -3944652744199321295L;
-<span class="nc" id="L20">    private Scanner reader;</span>
+public class Game implements Subscriber {
     private static GameArena gameArena;
+<span class="nc" id="L23">    private CommandParser commandParser;</span>
+<span class="nc" id="L24">    private boolean finished;</span>
 
-<span class="nc" id="L23">    public Game(GameArena gameArena) {</span>
-<span class="nc" id="L24">        EventBus.getInstance().subscribe(gameArena, &quot;topic&quot;);</span>
-<span class="nc" id="L25">        reader = new Scanner(System.in);</span>
-<span class="nc" id="L26">    }</span>
+<span class="nc" id="L26">    public Game(GameArena ga) {</span>
+<span class="nc" id="L27">        gameArena = ga;</span>
+<span class="nc" id="L28">        EventBus.getInstance().subscribe(this, Topics.GAME_STATE);</span>
+<span class="nc" id="L29">        commandParser = new CommandParser();</span>
+<span class="nc" id="L30">    }</span>
 
     public void start() {
-<span class="nc" id="L29">        Renderer welcomeRenderer = new WelcomeScreen();</span>
-<span class="nc" id="L30">        welcomeRenderer.render();</span>
-<span class="nc" id="L31">        boolean finished = false;</span>
-<span class="nc" id="L32">        gameArena.updateDisplay();</span>
-<span class="nc bnc" id="L33" title="All 2 branches missed.">        while (!finished) {</span>
-            String inputLine;   // will hold the full input line
-<span class="nc" id="L35">            String word1 = null;</span>
-<span class="nc" id="L36">            String word2 = null;</span>
+<span class="nc" id="L33">        Renderer welcomeRenderer = new WelcomeScreen();</span>
+<span class="nc" id="L34">        welcomeRenderer.render();</span>
+<span class="nc" id="L35">        finished = false;</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        while (!finished) {</span>
+<span class="nc" id="L37">            IssuedCommand issuedCommand = commandParser.getIssuedCommand();</span>
+<span class="nc" id="L38">            CommandExecutor.execute(issuedCommand);</span>
+<span class="nc" id="L39">        }</span>
+<span class="nc" id="L40">    }</span>
 
-<span class="nc" id="L38">            DisplayEngine.getDisplay().displayInGreen(&quot;&gt; &quot;);     // print prompt</span>
-<span class="nc" id="L39">            inputLine = reader.nextLine();</span>
-<span class="nc" id="L40">            Scanner tokenizer = new Scanner(inputLine);</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">            if (tokenizer.hasNext()) {</span>
-<span class="nc" id="L42">                word1 = tokenizer.next();      // get first word</span>
-<span class="nc bnc" id="L43" title="All 2 branches missed.">                if (tokenizer.hasNext()) {</span>
-<span class="nc" id="L44">                    word2 = tokenizer.next();      // get second word</span>
-                    // note: we just ignore the rest of the input line.
-                }
-            }
-<span class="nc bnc" id="L48" title="All 2 branches missed.">            if (word1.equals(&quot;save&quot;)) {</span>
-<span class="nc" id="L49">                SerializationUtil.serialize(Application.filePath, gameArena);</span>
-<span class="nc" id="L50">                finished = true;</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">            } else if (word1.equals(&quot;publish&quot;)) {</span>
-<span class="nc" id="L52">                EventBus.getInstance().publish(Message.builder().payload(&quot;test&quot;).topic(&quot;topic&quot;).build());</span>
-            }
-<span class="nc" id="L54">        }</span>
-
-<span class="nc" id="L56">    }</span>
-
-
+    @Override
+    public void receive(Message message) {
+<span class="nc" id="L44">        DisplayEngine.getDisplay().display(Color.YELLOW, &quot;Good bye, see you soon!!!&quot;);</span>
+<span class="nc" id="L45">        finished = true;</span>
+<span class="nc" id="L46">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

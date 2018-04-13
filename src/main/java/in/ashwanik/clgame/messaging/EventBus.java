@@ -1,5 +1,8 @@
 package in.ashwanik.clgame.messaging;
 
+import in.ashwanik.clgame.messaging.messages.Message;
+import in.ashwanik.clgame.utils.CollectionsUtil;
+
 import java.util.List;
 
 /**
@@ -35,7 +38,7 @@ public class EventBus {
 
     public void publish(Message message) {
         List<Subscriber> subscribers = broker.getSubscribersForTopic(message.getTopic());
-        if (subscribers != null) {
+        if (!CollectionsUtil.isEmpty(subscribers)) {
             for (Subscriber subscriber : subscribers) {
                 subscriber.receive(message);
             }

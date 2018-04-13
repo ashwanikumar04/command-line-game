@@ -1,8 +1,9 @@
 package in.ashwanik.clgame.ui.screens;
 
 import in.ashwanik.clgame.Player;
-import in.ashwanik.clgame.messaging.Message;
 import in.ashwanik.clgame.messaging.Subscriber;
+import in.ashwanik.clgame.messaging.messages.DisplayMessage;
+import in.ashwanik.clgame.messaging.messages.Message;
 import in.ashwanik.clgame.ui.DisplayEngine;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +19,6 @@ public class GameArena implements Serializable, Subscriber {
     private static final long serialVersionUID = -6158956787090431591L;
     private Player player;
 
-    public GameArena() {
-
-    }
-
     public void updateDisplay() {
         displayPlayerHud();
     }
@@ -34,6 +31,6 @@ public class GameArena implements Serializable, Subscriber {
 
     @Override
     public void receive(Message message) {
-        DisplayEngine.getDisplay().displayInGreen(message.getPayload().toString());
+        DisplayEngine.getDisplay().displayInGreen(((DisplayMessage) message).getPayload().toString());
     }
 }

@@ -6,13 +6,13 @@
 
 public abstract class Command {
 
-    private final CommandDescription description;
+    private final CommandDetail description;
 
-<span class="nc" id="L11">    Command(String name, String info) {</span>
-<span class="nc" id="L12">        description = new CommandDescription(name, info);</span>
+<span class="nc" id="L11">    public Command(String name, String info) {</span>
+<span class="nc" id="L12">        description = new CommandDetail(name, info);</span>
 <span class="nc" id="L13">    }</span>
 
-    public CommandDescription getDescription() {
+    public CommandDetail getDescription() {
 <span class="nc" id="L16">        return description;</span>
     }
 
