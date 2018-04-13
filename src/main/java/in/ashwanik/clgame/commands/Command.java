@@ -12,7 +12,7 @@ public abstract class Command {
         description = new CommandDetail(name, info);
     }
 
-    public CommandDetail getDescription() {
+    CommandDetail getDescription() {
         return description;
     }
 

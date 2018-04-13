@@ -7,8 +7,8 @@ import in.ashwanik.clgame.ui.screens.GameDisplay;
  */
 public class DisplayEngine {
     private static DisplayEngine INSTANCE;
-    private GameDisplay gameDisplay;
     private static boolean initialized;
+    private GameDisplay gameDisplay;
 
     private DisplayEngine(GameDisplay gameDisplay) {
         this.gameDisplay = gameDisplay;

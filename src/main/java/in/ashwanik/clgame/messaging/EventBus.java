@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class EventBus {
     private static EventBus INSTANCE;
-    private Broker broker;
     private static boolean initialized;
+    private Broker broker;
 
     private EventBus(Broker broker) {
         this.broker = broker;

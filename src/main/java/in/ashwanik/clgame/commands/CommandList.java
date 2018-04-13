@@ -6,7 +6,7 @@ import in.ashwanik.clgame.commands.list.Quit;
 import java.util.*;
 
 /**
- * Created by jh80 on 13/04/18.
+ * Created by Ashwani Kumar on 13/04/18.
  */
 public class CommandList {
     private static CommandList LIST;

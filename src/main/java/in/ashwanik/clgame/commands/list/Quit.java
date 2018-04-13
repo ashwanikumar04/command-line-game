@@ -7,7 +7,7 @@ import in.ashwanik.clgame.messaging.messages.MessageType;
 import in.ashwanik.clgame.messaging.messages.QuitMessage;
 
 /**
- * Created by jh80 on 13/04/18.
+ * Created by Ashwani Kumar on 13/04/18.
  */
 public class Quit extends Command {
 

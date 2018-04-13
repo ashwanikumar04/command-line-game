@@ -1,8 +1,8 @@
 package in.ashwanik.clgame.messaging.messages;
 
 /**
- * Created by jh80 on 13/04/18.
+ * Created by Ashwani Kumar on 13/04/18.
  */
 public enum MessageType {
-    DISPLAY, COMBAT,GAME_STATE
+    DISPLAY, COMBAT, GAME_STATE
 }
