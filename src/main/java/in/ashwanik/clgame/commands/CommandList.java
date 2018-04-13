@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class CommandList {
     private static CommandList LIST;
-    private final Map<String, Command> commandsMap = new TreeMap<>();
+    private final Map<String, Command> commandsMap = new HashMap<>();
 
     private CommandList() {
     }

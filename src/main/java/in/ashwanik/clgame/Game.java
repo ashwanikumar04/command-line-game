@@ -11,6 +11,8 @@ import in.ashwanik.clgame.ui.screens.GameArena;
 import in.ashwanik.clgame.ui.screens.Renderer;
 import in.ashwanik.clgame.ui.screens.impl.WelcomeScreen;
 
+import java.io.InputStream;
+
 /**
  * Created by Ashwani Kumar on 11/04/18.
  */
@@ -19,9 +21,9 @@ public class Game implements Subscriber {
     private CommandParser commandParser;
     private boolean finished;
 
-    public Game() {
+    public Game(InputStream inputStream) {
         EventBus.getInstance().subscribe(this, Topics.GAME_STATE);
-        commandParser = new CommandParser();
+        commandParser = new CommandParser(inputStream);
     }
 
     public static GameArena getGameArena() {
@@ -47,11 +49,6 @@ public class Game implements Subscriber {
         switch (message.getMessageType()) {
             case QUIT:
                 finished = true;
-                break;
-            case SAVE:
-                break;
-            case LOAD:
-
                 break;
             default:
                 break;

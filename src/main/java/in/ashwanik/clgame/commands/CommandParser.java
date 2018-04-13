@@ -3,14 +3,15 @@ package in.ashwanik.clgame.commands;
 import in.ashwanik.clgame.ui.DisplayEngine;
 import in.ashwanik.clgame.utils.StringUtils;
 
+import java.io.InputStream;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class CommandParser {
     private Scanner reader;
 
-    public CommandParser() {
-        reader = new Scanner(System.in);
+    public CommandParser(InputStream inputStream) {
+        reader = new Scanner(inputStream);
     }
 
     public IssuedCommand getIssuedCommand() {

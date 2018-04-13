@@ -3,10 +3,8 @@ package in.ashwanik.clgame.commands.list;
 import in.ashwanik.clgame.Game;
 import in.ashwanik.clgame.commands.Command;
 import in.ashwanik.clgame.ui.DisplayEngine;
-import in.ashwanik.clgame.ui.screens.GameArena;
 import in.ashwanik.clgame.utils.FileUtils;
 import in.ashwanik.clgame.utils.SerializationUtil;
-import in.ashwanik.clgame.utils.StringUtils;
 
 import java.io.File;
 import java.util.Objects;
@@ -22,16 +20,12 @@ public class Save extends Command {
 
     @Override
     public void execute(String[] arguments) {
-        String file = FileUtils.getLatestFile();
-        if (!StringUtils.isBlank(file)) {
-            GameArena gameArena = (GameArena) SerializationUtil.deserialize(FileUtils.getBasePath() + File.pathSeparator + file);
-            if (Objects.isNull(gameArena)) {
-                DisplayEngine.getDisplay().displayInRed("Some error occurred while loading the last game.");
-                return;
-            }
-            Game.setGameArena(gameArena);
-        } else {
-            DisplayEngine.getDisplay().displayInRed("No saved game is found.");
+        FileUtils.createBasePath();
+        String filePath = FileUtils.getBasePath() + File.pathSeparator + System.currentTimeMillis() + ".cer";
+        if (Objects.isNull(Game.getGameArena())) {
+            DisplayEngine.getDisplay().displayInRed("Game is not started");
+            return;
         }
+        SerializationUtil.serialize(filePath, Game.getGameArena());
     }
 }

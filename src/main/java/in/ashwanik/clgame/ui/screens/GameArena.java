@@ -1,6 +1,6 @@
 package in.ashwanik.clgame.ui.screens;
 
-import in.ashwanik.clgame.Player;
+import in.ashwanik.clgame.models.Player;
 import in.ashwanik.clgame.messaging.Subscriber;
 import in.ashwanik.clgame.messaging.messages.DisplayMessage;
 import in.ashwanik.clgame.messaging.messages.Message;

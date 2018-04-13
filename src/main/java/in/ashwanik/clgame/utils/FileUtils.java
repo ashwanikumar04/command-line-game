@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Created by jh80 on 13/04/18.
+ * Created by Ashwani Kumar on 13/04/18.
  */
 public class FileUtils {
     public static String getBasePath() {
@@ -18,6 +18,7 @@ public class FileUtils {
         String path = getBasePath();
         File file = new File(path);
         if (!file.isDirectory()) {
+            file.mkdir();
         }
     }
 
