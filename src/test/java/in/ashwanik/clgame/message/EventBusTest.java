@@ -41,7 +41,7 @@ public class EventBusTest {
     @Test
     public void Should_Publish_On_Topic() {
         EventBus.getInstance().subscribe(testSubscriber, "test");
-        EventBus.getInstance().publish(QuitMessage.builder().payload("").topic(Topics.GAME_STATE).messageType(MessageType.GAME_STATE).build());
+        EventBus.getInstance().publish(QuitMessage.builder().payload("").topic(Topics.GAME_STATE).messageType(MessageType.QUIT).build());
     }
 }
 

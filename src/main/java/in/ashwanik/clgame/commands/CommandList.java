@@ -2,6 +2,7 @@ package in.ashwanik.clgame.commands;
 
 import in.ashwanik.clgame.commands.list.Help;
 import in.ashwanik.clgame.commands.list.Quit;
+import in.ashwanik.clgame.commands.list.Save;
 
 import java.util.*;
 
@@ -26,6 +27,7 @@ public class CommandList {
         CommandList commandList = new CommandList();
         commandList.addCommand(new Help("help", "Lists all the supported commands"));
         commandList.addCommand(new Quit("quit", "Quit the game"));
+        commandList.addCommand(new Save("save", "Save the game"));
         LIST = commandList;
     }
 

@@ -69,18 +69,18 @@ jar {
 }
 
 build.dependsOn copyToLib
-
-jacoco {
-    toolVersion = jacocoToolVersion
-}
-
-jacocoTestReport {
-    reports {
-        html.enabled = true
-        xml.enabled = false
-        csv.enabled = false
-        html.destination "${project.projectDir}/reports/jacoco"
-    }
-}
-
-test.finalizedBy jacocoTestReport
+//
+//jacoco {
+//    toolVersion = jacocoToolVersion
+//}
+//
+//jacocoTestReport {
+//    reports {
+//        html.enabled = true
+//        xml.enabled = false
+//        csv.enabled = false
+//        html.destination "${project.projectDir}/reports/jacoco"
+//    }
+//}
+//
+//test.finalizedBy jacocoTestReport
