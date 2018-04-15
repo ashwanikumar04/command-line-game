@@ -71,6 +71,7 @@ public class Game implements Subscriber {
                 break;
             case QUIT:
                 finished = true;
+                System.exit(0);
                 break;
             case GAME_STARTED:
                 started = true;
