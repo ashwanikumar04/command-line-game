@@ -10,7 +10,6 @@ buildscript {
     ext {
         slf4jVersion = '1.7.25'
         logbackVersion = '1.2.3'
-        lombokVersion = '1.16.18'
         junitVersion = '4.12'
         assertjVersion = '3.6.1'
         mockitVersion = '2.3.11'
@@ -46,7 +45,6 @@ artifacts {
 dependencies {
     compile "org.slf4j:slf4j-api:$slf4jVersion"
     compile "ch.qos.logback:logback-classic:$logbackVersion"
-    compile group: 'org.projectlombok', name: 'lombok', version: "$lombokVersion"
 
     testCompile group: 'org.assertj', name: 'assertj-core', version: "$assertjVersion"
     testCompile group: 'org.mockito', name: 'mockito-core', version: "$mockitVersion"
@@ -70,18 +68,18 @@ jar {
 }
 
 build.dependsOn copyToLib
-//
-//jacoco {
-//    toolVersion = jacocoToolVersion
-//}
-//
-//jacocoTestReport {
-//    reports {
-//        html.enabled = true
-//        xml.enabled = false
-//        csv.enabled = false
-//        html.destination "${project.projectDir}/reports/jacoco"
-//    }
-//}
-//
+
+jacoco {
+    toolVersion = jacocoToolVersion
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled = true
+        xml.enabled = false
+        csv.enabled = false
+        html.destination "${project.projectDir}/reports/jacoco"
+    }
+}
+
 //test.finalizedBy jacocoTestReport

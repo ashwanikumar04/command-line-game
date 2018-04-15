@@ -5,6 +5,7 @@ import in.ashwanik.clgame.commands.CommandList;
 import in.ashwanik.clgame.messaging.Broker;
 import in.ashwanik.clgame.messaging.EventBus;
 import in.ashwanik.clgame.models.Armoury;
+import in.ashwanik.clgame.models.EnemyFactory;
 import in.ashwanik.clgame.ui.DisplayEngine;
 import in.ashwanik.clgame.ui.screens.GameDisplay;
 import in.ashwanik.clgame.ui.screens.impl.ConsoleDisplay;
@@ -29,5 +30,6 @@ public class Application {
         DisplayEngine.init(gameDisplay);
         CommandList.initCommands();
         Armoury.fill();
+        EnemyFactory.init();
     }
 }

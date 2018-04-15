@@ -17,17 +17,20 @@ public class CommandParser {
     public IssuedCommand getIssuedCommand() {
         DisplayEngine.getDisplay().displayInGreen("\n:$ ");
         String inputLine;
-        inputLine = reader.nextLine();
-        if (StringUtils.isBlank(inputLine)) {
-            return new IssuedCommand("");
-        }
-        StringTokenizer stringTokenizer = new StringTokenizer(inputLine);
+        if (reader.hasNextLine()) {
+            inputLine = reader.nextLine();
+            if (StringUtils.isBlank(inputLine)) {
+                return new IssuedCommand("");
+            }
+            StringTokenizer stringTokenizer = new StringTokenizer(inputLine);
 
-        IssuedCommand issuedCommand = new IssuedCommand(inputLine);
-        while (stringTokenizer.hasMoreTokens()) {
-            issuedCommand.addToken(stringTokenizer.nextToken());
+            IssuedCommand issuedCommand = new IssuedCommand(inputLine);
+            while (stringTokenizer.hasMoreTokens()) {
+                issuedCommand.addToken(stringTokenizer.nextToken());
+            }
+            return issuedCommand;
         }
-        return issuedCommand;
+        return new IssuedCommand("");
     }
 
 }

@@ -5,8 +5,8 @@ import in.ashwanik.clgame.messaging.Broker;
 import in.ashwanik.clgame.messaging.EventBus;
 import in.ashwanik.clgame.messaging.Subscriber;
 import in.ashwanik.clgame.messaging.Topics;
+import in.ashwanik.clgame.messaging.messages.GameStateMessage;
 import in.ashwanik.clgame.messaging.messages.MessageType;
-import in.ashwanik.clgame.messaging.messages.QuitMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -41,7 +41,7 @@ public class EventBusTest {
     @Test
     public void Should_Publish_On_Topic() {
         EventBus.getInstance().subscribe(testSubscriber, "test");
-        EventBus.getInstance().publish(QuitMessage.builder().payload("").topic(Topics.GAME_STATE).messageType(MessageType.QUIT).build());
+        EventBus.getInstance().publish(GameStateMessage.builder().payload("").topic(Topics.GAME_STATE).messageType(MessageType.QUIT).build());
     }
 }
 

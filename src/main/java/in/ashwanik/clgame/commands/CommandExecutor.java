@@ -1,6 +1,7 @@
 package in.ashwanik.clgame.commands;
 
 import in.ashwanik.clgame.ui.DisplayEngine;
+import in.ashwanik.clgame.utils.StringUtils;
 
 import java.util.Objects;
 
@@ -20,7 +21,9 @@ public class CommandExecutor {
     }
 
     public static void execute(IssuedCommand issuedCommand) {
-        Command command = getCommand(issuedCommand);
-        command.execute(issuedCommand.getArgs());
+        if(!StringUtils.isBlank(issuedCommand.getCommand())) {
+            Command command = getCommand(issuedCommand);
+            command.execute(issuedCommand.getArgs());
+        }
     }
 }

@@ -1,6 +1,8 @@
 package in.ashwanik.clgame.messaging;
 
+import in.ashwanik.clgame.Game;
 import in.ashwanik.clgame.messaging.messages.Message;
+import in.ashwanik.clgame.ui.DisplayEngine;
 import in.ashwanik.clgame.utils.CollectionsUtil;
 
 import java.util.List;
@@ -37,10 +39,13 @@ public class EventBus {
     }
 
     public void publish(Message message) {
+        if (Game.isDebug()) {
+            DisplayEngine.getDisplay().displayInWhite("\nMessage is published on " + message.getTopic() + ", message type: " + message.getMessageType());
+        }
         List<Subscriber> subscribers = broker.getSubscribersForTopic(message.getTopic());
         if (!CollectionsUtil.isEmpty(subscribers)) {
-            for (Subscriber subscriber : subscribers) {
-                subscriber.receive(message);
+            for (int index = 0; index < subscribers.size(); index++) {
+                subscribers.get(index).receive(message);
             }
         }
     }

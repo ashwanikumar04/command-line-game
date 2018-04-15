@@ -24,11 +24,14 @@ public class CommandList {
     public static void initCommands() {
         CommandList commandList = new CommandList();
         commandList.addCommand(new New("new", "Start a new game"));
-        commandList.addCommand(new Arm("arm", "Arm the player with weapons, You can run the command as arm 1 2"));
+        commandList.addCommand(new Arm("arm", "Arm the player with weapons, You can run the command as arm 1"));
         commandList.addCommand(new Start("start", "Start the game"));
+        commandList.addCommand(new Go("go", "Run go {direction} to go to a different room."));
+        commandList.addCommand(new Attack("attack", "Attack an enemy in a room"));
         commandList.addCommand(new Load("load", "Load the last saved game."));
         commandList.addCommand(new Save("save", "Save the game"));
         commandList.addCommand(new Help("help", "Lists all the supported commands"));
+        commandList.addCommand(new Debug("debug", "Enable logging"));
         commandList.addCommand(new Quit("quit", "Quit the game"));
         LIST = commandList;
     }

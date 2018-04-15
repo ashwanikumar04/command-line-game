@@ -35,4 +35,8 @@ public class Armoury {
     public List<Weapon> getWeapons() {
         return this.weapons;
     }
+
+    public int numberOfWeapons() {
+        return this.weapons.size();
+    }
 }

@@ -1,7 +1,5 @@
 package in.ashwanik.clgame.commands;
 
-import lombok.Getter;
-
 import java.util.Locale;
 
 import static in.ashwanik.clgame.utils.StringUtils.isNotLowercase;
@@ -9,7 +7,6 @@ import static in.ashwanik.clgame.utils.StringUtils.isNotLowercase;
 /**
  * Created by Ashwani Kumar on 13/04/18.
  */
-@Getter
 public class CommandDetail {
     private final String name;
     private final String info;
@@ -25,5 +22,13 @@ public class CommandDetail {
     @Override
     public String toString() {
         return getName() + " - " + getInfo();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getInfo() {
+        return this.info;
     }
 }

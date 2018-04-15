@@ -37,6 +37,9 @@ public class Broker {
     }
 
     void removeSubscriber(String topic, Subscriber subscriber) {
+        if (Objects.isNull(subscriber)) {
+            return;
+        }
         synchronized (subscribers) {
             if (!StringUtils.isBlank(topic)) {
                 List<Subscriber> subscribersList = getSubscribersForTopic(topic);
