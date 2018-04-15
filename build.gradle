@@ -15,6 +15,7 @@ buildscript {
         mockitVersion = '2.3.11'
         mockitInlineVersion = '2.10.0'
         jacocoToolVersion = '0.7.5.201505241946'
+        systemRules = '1.17.1'
 
     }
     repositories {
@@ -50,7 +51,7 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-core', version: "$mockitVersion"
     testCompile group: 'org.mockito', name: 'mockito-inline', version: "$mockitInlineVersion"
     testCompile group: 'junit', name: 'junit', version: "$junitVersion"
-    testCompile group: 'com.github.stefanbirkner', name: 'system-rules', version: "1.17.1"
+    testCompile group: 'com.github.stefanbirkner', name: 'system-rules', version: "$systemRules"
 }
 
 task copyToLib(type: Copy) {
