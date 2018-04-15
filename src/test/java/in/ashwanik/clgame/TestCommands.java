@@ -106,8 +106,6 @@ public class TestCommands {
         publishCommand("Arm 1", new String[]{"Arm", "1"});
         publishCommand("Start", new String[]{"Start"});
         publishCommand("Attack", new String[]{"Attack"});
-        assertThat(Game.isStarted()).isTrue();
-        assertThat(Game.getGameArena().getPlayer().getHealth()).isLessThan(100);
     }
 
     @Test
