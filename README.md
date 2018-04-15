@@ -2,6 +2,8 @@
 A simple command line game in Java
 ![Game](images/game.png)
 
+Code coverage
+![Code coverage](images/code-coverage.png)
 
 # Build the game
 ```bash
