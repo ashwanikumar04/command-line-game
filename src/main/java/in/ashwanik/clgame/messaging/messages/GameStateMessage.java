@@ -58,8 +58,5 @@ public class GameStateMessage extends Message {
             return new GameStateMessage(topic, sender, receiver, messageType, payload);
         }
 
-        public String toString() {
-            return "in.ashwanik.clgame.messaging.messages.GameStateMessage.GameStateMessageBuilder(topic=" + this.topic + ", sender=" + this.sender + ", receiver=" + this.receiver + ", messageType=" + this.messageType + ", payload=" + this.payload + ")";
-        }
     }
 }

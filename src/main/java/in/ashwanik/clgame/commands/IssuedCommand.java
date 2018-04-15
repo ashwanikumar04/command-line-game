@@ -12,16 +12,16 @@ public class IssuedCommand {
     private final String stringRepresentation;
     private final List<String> tokens;
 
-    IssuedCommand(String issuedCommand) {
+    public IssuedCommand(String issuedCommand) {
         this.stringRepresentation = issuedCommand;
         this.tokens = new ArrayList<>();
     }
 
-    void addToken(String token) {
+    public void addToken(String token) {
         tokens.add(token);
     }
 
-    String getCommand() {
+    public String getCommand() {
         return CollectionsUtil.isEmpty(tokens) ? "" : tokens.get(0);
     }
 

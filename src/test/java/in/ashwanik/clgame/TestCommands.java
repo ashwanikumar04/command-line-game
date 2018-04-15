@@ -1,21 +1,22 @@
 package in.ashwanik.clgame;
 
 import in.ashwanik.clgame.commands.Command;
+import in.ashwanik.clgame.commands.IssuedCommand;
 import in.ashwanik.clgame.commands.list.Help;
-import in.ashwanik.clgame.ui.screens.GameDisplay;
+import in.ashwanik.clgame.messaging.EventBus;
+import in.ashwanik.clgame.messaging.Topics;
+import in.ashwanik.clgame.messaging.messages.CommandMessage;
+import in.ashwanik.clgame.messaging.messages.MessageType;
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static in.ashwanik.clgame.TestData.initBaseData;
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
 
 /**
  * Created by Ashwani Kumar on 12/04/18.
@@ -23,26 +24,33 @@ import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emp
 @Category(UnitTest.class)
 public class TestCommands {
 
-    private static List<String> messages;
-    @Rule
-    public final TextFromStandardInputStream systemInMock
-            = emptyStandardInputStream();
-    private static GameDisplay gameDisplay;
+    private List<String> messages;
 
-    private static void init() {
+    private void init() {
         messages = new ArrayList<>();
-        gameDisplay = new TestData.TestDisplay(messages);
+        initBaseData(messages);
     }
 
-    @BeforeClass
-    public static void setup() throws IOException {
-        init();
+    private void publishCommand(String command, String[] params) {
+        IssuedCommand issuedCommand = new IssuedCommand(command);
+        for (String arg : params) {
+            issuedCommand.addToken(arg);
+        }
+        EventBus.getInstance().publish(CommandMessage.builder().messageType(MessageType.COMMAND).topic(Topics.COMMAND).payload(issuedCommand).build());
+    }
+
+    private Game setGame() {
+        return new Game(() -> {
+
+        });
     }
 
     @Before
     public void setupTest() throws IOException {
+        init();
         messages.clear();
         Game.reset();
+        setGame();
     }
 
     @Test
@@ -53,82 +61,85 @@ public class TestCommands {
     }
 
     @Test
-    public void Should_Run_Help() {
-        systemInMock.provideLines("help", "debug", "Quit");
-        Application.startGame(System.in, gameDisplay);
-        assertThat(Game.isDebug()).isTrue();
-        assertThat(messages.size()).isGreaterThan(0);
+    public void Should_Check_If_Game_Initialized() {
+        Game game = Application.startGame(() -> publishCommand("Help", new String[]{"Help"}), new TestData.TestDisplay(messages), true);
+        assertThat(game).isNotNull();
     }
 
+
     @Test
-    public void Should_Run_Arm_No_Weapon_Game_Not_Started() {
-        systemInMock.provideLines("new", "arm ", "Quit");
-        Application.startGame(System.in, gameDisplay);
+    public void Should_Not_Start_Game_On_New() {
+        publishCommand("New", new String[]{"New"});
         assertThat(Game.isStarted()).isFalse();
     }
 
     @Test
-    public void Should_Run_Arm_Game_Not_Started() {
-        systemInMock.provideLines("arm 1", "Quit");
-        Application.startGame(System.in, gameDisplay);
+    public void Should_Not_Start_Game_On_Arm() {
+        publishCommand("New", new String[]{"New"});
+        publishCommand("Arm 1", new String[]{"Arm", "1"});
         assertThat(Game.isStarted()).isFalse();
     }
 
     @Test
-    public void Should_Run_Arm_Game_Started() {
-        systemInMock.provideLines("new", "arm 1", "start", "Quit");
-        Application.startGame(System.in, gameDisplay);
+    public void Should_Not_Start_Game_On_Start_FollowedBy_Arm() {
+        publishCommand("Debug", new String[]{"Debug"});
+        publishCommand("New", new String[]{"New"});
+        publishCommand("Arm 1", new String[]{"Arm", "1"});
+        publishCommand("Start", new String[]{"Start"});
         assertThat(Game.isStarted()).isTrue();
     }
 
     @Test
     public void Should_Run_Go_After_Only_Game_Started() {
-        systemInMock.provideLines("arm 1", "go", "Quit");
-        Application.startGame(System.in, gameDisplay);
-        assertThat(messages.size()).isGreaterThan(0);
+        publishCommand("New", new String[]{"New"});
+        publishCommand("Arm 1", new String[]{"Arm", "1"});
+        publishCommand("Start", new String[]{"Start"});
+        publishCommand("Go", new String[]{"Go"});
+        publishCommand("Go north", new String[]{"Go", "North"});
+        assertThat(Game.isStarted()).isTrue();
     }
 
-    @Test
-    public void Should_Run_Go_After_Game_Started() {
-        systemInMock.provideLines("arm 1", "start", "go north", "quit");
-        Application.startGame(System.in, gameDisplay);
-        assertThat(messages.size()).isGreaterThan(0);
-    }
 
     @Test
     public void Should_Run_Attack_After_Game_Started() {
-        systemInMock.provideLines("arm 1", "start", "attack", "quit");
-        Application.startGame(System.in, gameDisplay);
+        publishCommand("New", new String[]{"New"});
+        publishCommand("Arm 1", new String[]{"Arm", "1"});
+        publishCommand("Start", new String[]{"Start"});
+        publishCommand("Attack", new String[]{"Attack"});
+        assertThat(Game.isStarted()).isTrue();
         assertThat(Game.getGameArena().getPlayer().getHealth()).isLessThan(100);
-        assertThat(messages.size()).isGreaterThan(0);
     }
 
     @Test
-    public void Should_Run_Attack_ToFinish() {
-        systemInMock.provideLines("arm 1", "start", "attack", "attack", "quit");
-        Application.startGame(System.in, gameDisplay);
-        assertThat(messages.size()).isGreaterThan(0);
+    public void Should_Kill_Enemy() {
+        publishCommand("New", new String[]{"New"});
+        publishCommand("Arm 5", new String[]{"Arm", "5"});
+        publishCommand("Start", new String[]{"Start"});
+        publishCommand("Attack", new String[]{"Attack"});
+        publishCommand("Attack", new String[]{"Attack"});
+
+        assertThat(Game.getGameArena().getPlayer().getExperience()).isGreaterThan(100);
     }
 
+
     @Test
-    public void Should_Run_Attack_ToKillEnemy() {
-        systemInMock.provideLines("arm 5", "start", "attack", "attack", "attack", "quit");
-        Application.startGame(System.in, gameDisplay);
-        assertThat(messages.size()).isGreaterThan(0);
+    public void Should_Quit_Game() {
+        publishCommand("New", new String[]{"New"});
+        publishCommand("Quit", new String[]{"Quit"});
+        assertThat(Game.isStarted()).isFalse();
     }
 
     @Test
     public void Should_Save_Game() {
-        systemInMock.provideLines("arm 5", "start", "save", "quit");
-        Application.startGame(System.in, gameDisplay);
-        assertThat(messages.size()).isGreaterThan(0);
+        publishCommand("New", new String[]{"New"});
+        publishCommand("Arm 1", new String[]{"Arm", "1"});
+        publishCommand("Start", new String[]{"Start"});
+        publishCommand("Save", new String[]{"Save"});
     }
 
     @Test
     public void Should_Load_Game() {
-        systemInMock.provideLines("load", "quit");
-        Application.startGame(System.in, gameDisplay);
-        assertThat(messages.size()).isGreaterThan(0);
+        publishCommand("load", new String[]{"load"});
     }
 }
 

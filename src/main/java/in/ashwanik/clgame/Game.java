@@ -2,10 +2,10 @@ package in.ashwanik.clgame;
 
 import in.ashwanik.clgame.commands.CommandExecutor;
 import in.ashwanik.clgame.commands.CommandParser;
-import in.ashwanik.clgame.commands.IssuedCommand;
 import in.ashwanik.clgame.messaging.EventBus;
 import in.ashwanik.clgame.messaging.Subscriber;
 import in.ashwanik.clgame.messaging.Topics;
+import in.ashwanik.clgame.messaging.messages.CommandMessage;
 import in.ashwanik.clgame.messaging.messages.GameStateMessage;
 import in.ashwanik.clgame.messaging.messages.Message;
 import in.ashwanik.clgame.ui.DisplayEngine;
@@ -13,7 +13,6 @@ import in.ashwanik.clgame.ui.screens.GameArena;
 import in.ashwanik.clgame.ui.screens.Renderer;
 import in.ashwanik.clgame.ui.screens.impl.WelcomeScreen;
 
-import java.io.InputStream;
 import java.util.Objects;
 
 /**
@@ -26,9 +25,10 @@ public class Game implements Subscriber {
     private static boolean isDebug;
     private static boolean started;
 
-    public Game(InputStream inputStream) {
+    public Game(CommandParser commandParser) {
         EventBus.getInstance().subscribe(this, Topics.GAME_STATE);
-        commandParser = new CommandParser(inputStream);
+        EventBus.getInstance().subscribe(this, Topics.COMMAND);
+        this.commandParser = commandParser;
     }
 
     public static GameArena getGameArena() {
@@ -52,19 +52,23 @@ public class Game implements Subscriber {
         Game.isDebug = isDebug;
     }
 
-    public void start() {
+    public void start(boolean processSingleCommand) {
         Renderer welcomeRenderer = new WelcomeScreen();
         welcomeRenderer.render();
         finished = false;
         while (!finished) {
-            IssuedCommand issuedCommand = commandParser.getIssuedCommand();
-            CommandExecutor.execute(issuedCommand);
+            commandParser.publishIssuesCommand();
+            finished = processSingleCommand;
         }
     }
 
     @Override
     public void receive(Message message) {
         switch (message.getMessageType()) {
+            case COMMAND:
+                CommandMessage commandMessage = (CommandMessage) message;
+                CommandExecutor.execute(commandMessage.getPayload());
+                break;
             case QUIT:
                 finished = true;
                 break;

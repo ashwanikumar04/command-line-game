@@ -5,5 +5,5 @@ package in.ashwanik.clgame.messaging;
  */
 public class Topics {
     public static final String GAME_STATE = "game_state";
-    public static final String COMBAT = "combat";
+    public static final String COMMAND = "command";
 }
