@@ -18,6 +18,25 @@ public class Go extends Command {
         super(name, info);
     }
 
+    private String getDirection(String direction) {
+        if (direction.length() > 1) {
+            return direction.toLowerCase();
+        }
+
+        switch (direction.toLowerCase()) {
+            case "e":
+                return "east";
+            case "w":
+                return "west";
+            case "n":
+                return "north";
+            case "s":
+                return "south";
+            default:
+                return direction;
+        }
+    }
+
     @Override
     public void execute(String[] arguments) {
         if (!Game.isStarted()) {
@@ -28,6 +47,6 @@ public class Go extends Command {
             DisplayEngine.getDisplay().display(Color.RED, "\nGo where?\n");
             return;
         }
-        EventBus.getInstance().publish(GameStateMessage.builder().topic(Topics.GAME_STATE).messageType(MessageType.ROOM_CHANGE).payload(arguments[0]).build());
+        EventBus.getInstance().publish(GameStateMessage.builder().topic(Topics.GAME_STATE).messageType(MessageType.ROOM_CHANGE).payload(getDirection(arguments[0])).build());
     }
 }

@@ -24,9 +24,10 @@ public class CommandList {
     public static void initCommands() {
         CommandList commandList = new CommandList();
         commandList.addCommand(new New("new", "Start a new game"));
+        commandList.addCommand(new Create("create", "Create a character `create Robin`"));
         commandList.addCommand(new Arm("arm", "Arm the player with weapons, You can run the command as arm 1"));
         commandList.addCommand(new Start("start", "Start the game"));
-        commandList.addCommand(new Go("go", "Run go {direction} to go to a different room."));
+        commandList.addCommand(new Go("go", "Run go {direction} to go to a different room i.e. 'go north' or 'go n/N' to go in north direction"));
         commandList.addCommand(new Attack("attack", "Attack an enemy in a room"));
         commandList.addCommand(new Load("load", "Load the last saved game."));
         commandList.addCommand(new Save("save", "Save the game"));

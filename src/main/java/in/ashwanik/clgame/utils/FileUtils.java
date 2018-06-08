@@ -1,5 +1,7 @@
 package in.ashwanik.clgame.utils;
 
+import in.ashwanik.clgame.ui.DisplayEngine;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Objects;
@@ -22,7 +24,6 @@ public class FileUtils {
 
     public static String getLatestFile() {
         String path = getBasePath();
-
         File file = new File(path);
         if (file.isDirectory()) {
             String[] files = file.list();
@@ -32,6 +33,18 @@ public class FileUtils {
             } else {
                 return "";
             }
+        } else {
+            return "";
+        }
+    }
+
+    public static String getFilePath(String fileName) {
+        String path = getBasePath();
+        String filePath = path + File.separator + fileName;
+
+        File file = new File(filePath);
+        if (file.exists()) {
+            return filePath;
         } else {
             return "";
         }

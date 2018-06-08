@@ -20,11 +20,11 @@ public class Save extends Command {
     @Override
     public void execute(String[] arguments) {
         FileUtils.createBasePath();
-        String filePath = FileUtils.getBasePath() + File.separator + System.currentTimeMillis() + ".cer";
         if (!Game.isStarted()) {
             DisplayEngine.getDisplay().displayInRed("\nGame is not started\n");
             return;
         }
+        String filePath = FileUtils.getBasePath() + File.separator + Game.getGameArena().getPlayer().getName() + ".cer";
         SerializationUtil.serialize(filePath, Game.getGameArena());
         DisplayEngine.getDisplay().displayInWhite("\nGame saved\n");
     }

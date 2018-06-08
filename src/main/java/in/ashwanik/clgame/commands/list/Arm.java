@@ -4,10 +4,8 @@ import in.ashwanik.clgame.Game;
 import in.ashwanik.clgame.commands.Command;
 import in.ashwanik.clgame.commands.CommandList;
 import in.ashwanik.clgame.models.Armoury;
-import in.ashwanik.clgame.models.Player;
 import in.ashwanik.clgame.models.Weapon;
 import in.ashwanik.clgame.ui.DisplayEngine;
-import in.ashwanik.clgame.ui.screens.GameArena;
 import in.ashwanik.clgame.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -33,15 +31,13 @@ public class Arm extends Command {
         if (getValidWeapons(arguments, validWeapons)) {
             return;
         }
-        if (!Objects.isNull(Game.getGameArena())) {
-            DisplayEngine.getDisplay().displayInWhite("You have already armed the player, now start the game.");
+        if (Objects.isNull(Game.getGameArena())) {
+            DisplayEngine.getDisplay().displayInRed("First create the player");
             return;
         }
 
-        Player player = new Player("player", "player", 100, validWeapons);
-        GameArena gameArena = new GameArena(2);
-        gameArena.setPlayer(player);
-        Game.setGameArena(gameArena);
+        Game.getGameArena().getPlayer().addWeapon(validWeapons.get(0));
+
         DisplayEngine.getDisplay().displayInWhite("Now start the game");
     }
 

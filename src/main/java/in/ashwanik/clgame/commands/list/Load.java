@@ -13,7 +13,6 @@ import in.ashwanik.clgame.utils.FileUtils;
 import in.ashwanik.clgame.utils.SerializationUtil;
 import in.ashwanik.clgame.utils.StringUtils;
 
-import java.io.File;
 import java.util.Objects;
 
 /**
@@ -27,9 +26,13 @@ public class Load extends Command {
 
     @Override
     public void execute(String[] arguments) {
-        String file = FileUtils.getLatestFile();
+        if (arguments.length == 0) {
+            DisplayEngine.getDisplay().displayInRed("Please pass the player name to load the game.\n");
+            return;
+        }
+        String file = FileUtils.getFilePath(arguments[0] + ".cer");
         if (!StringUtils.isBlank(file)) {
-            GameArena gameArena = (GameArena) SerializationUtil.deserialize(FileUtils.getBasePath() + File.separator + file);
+            GameArena gameArena = (GameArena) SerializationUtil.deserialize(file);
             if (Objects.isNull(gameArena)) {
                 DisplayEngine.getDisplay().displayInRed("\nSome error occurred while loading the last game.\n");
                 return;

@@ -1,6 +1,7 @@
 package in.ashwanik.clgame.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,11 +12,18 @@ public class Player extends Character implements Serializable {
 
     private int experience;
 
+    public Player(String name, String description, int health) {
+        this(name, description, health, new ArrayList<>());
+    }
+
     public Player(String name, String description, int health, List<Weapon> weapons) {
         super(name, description, health, weapons);
         experience = 100;
     }
 
+    public void addWeapon(Weapon weapon) {
+        this.getWeapons().add(weapon);
+    }
 
     @Override
     public void changeHealth(int delta) {
